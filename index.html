@@ -655,7 +655,11 @@
       </div>
 
       <div class="contact-card">
-        <form id="contactForm">
+        <form id="contactForm" action="https://formsubmit.co/laurence.hypnose66@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nouveau contact depuis le site hypnose66.fr">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+
           <div class="hidden-trap">
             <label for="website_trap">Ne pas remplir :</label>
             <input type="text" id="website_trap" name="website_trap">
@@ -663,23 +667,23 @@
 
           <div class="form-group">
             <label for="name" class="form-label">Votre nom et prénom *</label>
-            <input type="text" id="name" class="form-input" required placeholder="Ex : Marie Dupont">
+            <input type="text" id="name" name="nom" class="form-input" required placeholder="Ex : Marie Dupont">
           </div>
 
           <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
             <div>
               <label for="email" class="form-label">Email *</label>
-              <input type="email" id="email" class="form-input" required placeholder="nom@exemple.fr">
+              <input type="email" id="email" name="email" class="form-input" required placeholder="nom@exemple.fr">
             </div>
             <div>
               <label for="phone" class="form-label">Téléphone *</label>
-              <input type="tel" id="phone" class="form-input" required placeholder="06 00 00 00 00">
+              <input type="tel" id="phone" name="telephone" class="form-input" required placeholder="06 00 00 00 00">
             </div>
           </div>
 
           <div class="form-group">
             <label for="consultType" class="form-label">Votre demande</label>
-            <select id="consultType" class="form-input">
+            <select id="consultType" name="demande" class="form-input">
               <option value="Premier échange gratuit (30 min)">Premier échange offert (30 min)</option>
               <option value="Séance au cabinet à Elne">Séance au cabinet (Espace Satya, Elne)</option>
               <option value="Séance en téléconsultation (visio)">Séance en téléconsultation (Visio)</option>
@@ -689,10 +693,10 @@
 
           <div class="form-group">
             <label for="message" class="form-label">Votre message / Ce qui vous amène</label>
-            <textarea id="message" class="form-input" placeholder="Stress, douleurs, sommeil, phobies, libération émotionnelle..."></textarea>
+            <textarea id="message" name="message" class="form-input" placeholder="Stress, douleurs, sommeil, phobies, libération émotionnelle..."></textarea>
           </div>
 
-          <div id="formFeedback" style="display: none; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.9rem; background: var(--brand-sage-light); color: var(--brand-teal-dark);"></div>
+          <div id="formFeedback" style="display: none;" class="form-feedback"></div>
 
           <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1rem; padding: 0.95rem;">
             Envoyer mon message à Laurence
@@ -765,6 +769,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=2.6"></script>
+  <script src="js/main.js?v=2.8"></script>
 </body>
 </html>

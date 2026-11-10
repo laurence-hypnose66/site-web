@@ -82,15 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutoSlide();
   }
 
-  // 3. Gestion du formulaire de contact avec protection anti-spam (honeypot)
+  // 3. Gestion du formulaire de contact (envoi direct sans client mail obligatoire)
   const contactForm = document.getElementById('contactForm');
   const formFeedback = document.getElementById('formFeedback');
+  const submitBtn = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
 
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Vérification honeypot
+      // Vérification honeypot anti-spam
       const honeypot = document.getElementById('website_trap');
       if (honeypot && honeypot.value.trim() !== '') {
         console.warn('Bot détecté');
@@ -100,30 +101,85 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const phone = document.getElementById('phone').value.trim();
-      const message = document.getElementById('message').value.trim();
       const consultType = document.getElementById('consultType').value;
+      const message = document.getElementById('message').value.trim();
 
-      // Construction du mailto direct pour envoyer directement à Laurence
-      const subject = encodeURIComponent(`Nouveau contact site web : ${name} (${consultType})`);
-      const body = encodeURIComponent(
-        `Bonjour Laurence,\n\nVous avez reçu un nouveau message depuis votre site internet :\n\n` +
-        `Nom : ${name}\n` +
-        `Email : ${email}\n` +
-        `Téléphone : ${phone}\n` +
-        `Modalité souhaitée : ${consultType}\n\n` +
-        `Message :\n${message}\n\n--\nEnvoyé depuis votre site vitrine`
-      );
-
-      const mailtoUrl = `mailto:laurence.hypnose66@gmail.com?subject=${subject}&body=${body}`;
-
-      if (formFeedback) {
-        formFeedback.style.display = 'block';
-        formFeedback.className = 'form-feedback success';
-        formFeedback.innerHTML = `Merci ${name} ! Votre client de messagerie va s'ouvrir pour envoyer le message directement à Laurence. Si rien ne se passe, vous pouvez la joindre directement au <a href="tel:0675518267"><strong>06 75 51 82 67</strong></a>.`;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Envoi de votre message en cours...';
       }
 
-      // Déclenchement de l'ouverture du client mail
-      window.location.href = mailtoUrl;
+      const payload = {
+        nom: name,
+        email: email,
+        telephone: phone,
+        demande: consultType,
+        message: message || "(Aucun message spécifique renseigné)",
+        _subject: `Nouveau message hypnose66.fr : ${name} (${consultType})`,
+        _template: "table",
+        _captcha: "false"
+      };
+
+      try {
+        const response = await fetch("https://formsubmit.co/ajax/laurence.hypnose66@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur réseau (${response.status})`);
+        }
+
+        const data = await response.json();
+
+        if (formFeedback) {
+          formFeedback.style.display = 'block';
+          formFeedback.className = 'form-feedback success';
+          formFeedback.innerHTML = `
+            <strong>Merci beaucoup ${name} !</strong><br>
+            Votre message a bien été transmis directement à Laurence Gaudy.<br>
+            Elle prendra contact avec vous très rapidement.<br>
+            <span style="font-size: 0.85rem; margin-top: 0.4rem; display: inline-block;">
+              En cas de besoin urgent, vous pouvez également la joindre au <a href="tel:0675518267" style="color: inherit; font-weight: 700; text-decoration: underline;">06 75 51 82 67</a>.
+            </span>
+          `;
+        }
+        contactForm.reset();
+
+      } catch (err) {
+        console.error("Erreur d'envoi du formulaire:", err);
+        // Fallback transparent : préparation du mail pré-rempli si le réseau ou un bloqueur interfère
+        const subjectMail = encodeURIComponent(`Nouveau contact site web : ${name} (${consultType})`);
+        const bodyMail = encodeURIComponent(
+          `Bonjour Laurence,\n\n` +
+          `Nom : ${name}\n` +
+          `Email : ${email}\n` +
+          `Téléphone : ${phone}\n` +
+          `Demande : ${consultType}\n\n` +
+          `Message :\n${message}\n\n--\nEnvoyé depuis le site hypnose66.fr`
+        );
+        const mailtoUrl = `mailto:laurence.hypnose66@gmail.com?subject=${subjectMail}&body=${bodyMail}`;
+
+        if (formFeedback) {
+          formFeedback.style.display = 'block';
+          formFeedback.className = 'form-feedback error';
+          formFeedback.innerHTML = `
+            <strong>Une restriction réseau empêche l'envoi direct automatique.</strong><br>
+            Vous pouvez envoyer votre message en 1 clic :<br>
+            <a href="${mailtoUrl}" class="btn-fallback-mail">📧 Cliquer ici pour ouvrir votre email pré-rempli</a><br>
+            ou joindre Laurence directement au <a href="tel:0675518267" style="color: inherit; font-weight: 700;"><strong>06 75 51 82 67</strong></a>.
+          `;
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Envoyer mon message à Laurence';
+        }
+      }
     });
   }
 
