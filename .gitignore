@@ -1,0 +1,17 @@
+# Dépendances et builds
+node_modules/
+dist/
+build/
+.cache/
+
+# Variables d'environnement et secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Système macOS et éditeurs
+.DS_Store
+.idea/
+.vscode/
+*.log
