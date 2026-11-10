@@ -359,6 +359,7 @@ a {
   font-weight: 700;
 }
 
+.hero h1,
 .hero h2 {
   font-family: var(--font-serif);
   font-size: 2.85rem;
@@ -367,6 +368,7 @@ a {
   margin-bottom: 1.35rem;
 }
 
+.hero h1 span,
 .hero h2 span {
   color: var(--brand-teal);
   font-style: italic;
@@ -1193,6 +1195,7 @@ textarea.form-input {
     grid-template-columns: 1fr 1fr;
   }
 
+  .hero h1,
   .hero h2 {
     font-size: 2.2rem;
   }
@@ -1247,6 +1250,7 @@ textarea.form-input {
     letter-spacing: 0.04em;
   }
 
+  .hero h1,
   .hero h2 {
     font-size: 1.75rem;
     line-height: 1.25;

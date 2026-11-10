@@ -1,0 +1,6 @@
+# robots.txt pour Laurence Gaudy (hypnose66.fr)
+User-agent: *
+Allow: /
+
+# Sitemap XML officiel
+Sitemap: https://hypnose66.fr/sitemap.xml

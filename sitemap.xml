@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://hypnose66.fr/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://hypnose66.fr/images/banner.png</image:loc>
+      <image:title>Laurence Gaudy – Cabinet d'Hypnothérapie et EFT à Elne</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://hypnose66.fr/images/cabinet-espace-satya.jpg</image:loc>
+      <image:title>Cabinet de consultation de Laurence Gaudy à l'Espace Satya d'Elne</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://hypnose66.fr/images/bienfaits-eft.png</image:loc>
+      <image:title>Les 6 bienfaits de la méthode EFT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://hypnose66.fr/images/logo.png</image:loc>
+      <image:title>Logo officiel Laurence Gaudy Hypnothérapeute</image:title>
+    </image:image>
+  </url>
+</urlset>
